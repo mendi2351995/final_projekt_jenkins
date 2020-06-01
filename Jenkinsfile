@@ -61,9 +61,11 @@ pipeline {
                 echo "file ${report_file} exists"
               else
 	              touch ${report_file}
-              fi              
+              fi  
+	      touch ${WORKSPACE}/scripts
+	      touch ${WORKSPACE}/scripts/results
               echo "Build Number $BUILD_NUMBER" >> ${report_file}
-              cat ${WORKSPACE}/results >> ${report_file}
+	      cat ${WORKSPACE}/scripts/results >> ${report_file}
 	      echo "#############################" >> ${report_file}
             '''
          }
