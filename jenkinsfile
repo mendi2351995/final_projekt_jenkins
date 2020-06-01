@@ -11,7 +11,7 @@ pipeline {
          steps {
             echo 'Build process..'            
             sh '''
-                cd ${WORKSPACE}/scripts/
+                cd ${WORKSPACE}/
                 chmod 755 *.sh
             '''
          }
@@ -24,9 +24,26 @@ pipeline {
       stage('Test') {
          steps {
             echo 'Test process..'
+		sh '''
+		    if [[ $PARAM == "ALL" ]]; then
+			 do_this
+		elif [[ $PARAM == "PYTHON" ]]; then
+		      echo 'Execute python script'
+		      chmod 755 ${WORKSPACE}/python.py
+		      ${WORKSPACE}/python.py $PARAM
+		elif [[ $PARAM == "C" ]]; then
+		 chmod 755 ${WORKSPACE}/Cfile.c
+		 ${WORKSPACE}/Cfile.c $PARAM
+		elif [[ $PARAM == "BASH" ]]; then 
+		  chmod 755 ${WORKSPACE}/bash.sh
+		  ${WORKSPACE}/bash.sh $PARAM
+		else
+		 echo "$PARAM file not exsit"
+		fi
+		'''  
             sh '''
               echo "Testing input string $PARAM" 
-              cd ${WORKSPACE}/scripts
+              cd ${WORKSPACE}
               ./reverse.sh $PARAM
               ./reverse.sh $PARAM > results
             '''
