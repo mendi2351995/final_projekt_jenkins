@@ -35,7 +35,7 @@ pipeline {
 		      echo "Testing input string $PARAM" 
             	      cd ${WORKSPACE}
                       python python.py $PARAM
-                      python python.py $PARAM >> results
+                      python python.py $PARAM >> /home/slave/workspace/results
 		      
 		    elif [[ $PARAM == "C" ]]; then
 		    	echo 'Execute C script'
@@ -51,23 +51,7 @@ pipeline {
 		'''  
          }
       }
-      stage('Saving Results') {
-         steps {
-            echo 'Saving Results process..'
-            sh '''
-	      report_file="${HOME}/Documents/Deployment/report"
-              mkdir -p ${HOME}/Documents/Deployment/              
-              if [ -f "${report_file}" ]; then
-                echo "file ${report_file} exists"
-              else
-	              touch ${report_file}
-              fi              
-              echo "Build Number $BUILD_NUMBER" >> ${report_file}
-              cat ${WORKSPACE}/results >> ${report_file}
-	      echo "#############################" >> ${report_file}
-            '''
-         }
-      }
+      
       
    }
 }
