@@ -26,15 +26,17 @@ pipeline {
             echo 'Test process..'
 		sh '''
 		    if [[ $PARAM == "ALL" ]]; then
-			 do_this
+			echo 'Execute ALL script'
 		elif [[ $PARAM == "PYTHON" ]]; then
 		      echo 'Execute python script'
 		      chmod 755 ${WORKSPACE}/python.py
 		      ${WORKSPACE}/python.py $PARAM
 		elif [[ $PARAM == "C" ]]; then
+		 echo 'Execute C script'
 		 chmod 755 ${WORKSPACE}/Cfile.c
 		 ${WORKSPACE}/Cfile.c $PARAM
 		elif [[ $PARAM == "BASH" ]]; then 
+		  echo 'Execute BASH script'
 		  chmod 755 ${WORKSPACE}/bash.sh
 		  ${WORKSPACE}/bash.sh $PARAM
 		else
