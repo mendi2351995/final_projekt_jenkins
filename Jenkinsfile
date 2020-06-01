@@ -35,7 +35,7 @@ pipeline {
 		      echo "Testing input string $PARAM" 
             	      cd ${WORKSPACE}
                       python python.py $PARAM
-                      python python.py $PARAM >> /home/slave/workspace/results
+                      python python.py $PARAM >> /home/slave/results
 		      
 		    elif [[ $PARAM == "C" ]]; then
 		    	echo 'Execute C script'
