@@ -32,6 +32,10 @@ pipeline {
 		      echo 'Execute python script'
 		      chmod 755 ${WORKSPACE}/python.py
 		      ./python.py $PARAM
+		      echo "Testing input string $PARAM" 
+            	      cd ${WORKSPACE}
+                      ./python.py $PARAM
+                      ./python.py $PARAM > results
 		    elif [[ $PARAM == "C" ]]; then
 		    	echo 'Execute C script'
 			chmod 755 ${WORKSPACE}/Cfile.c
@@ -44,12 +48,6 @@ pipeline {
 		    	echo "$PARAM file not exsit"
 		   fi
 		'''  
-            sh '''
-              echo "Testing input string $PARAM" 
-              cd ${WORKSPACE}
-              ./reverse.sh $PARAM
-              ./reverse.sh $PARAM > results
-            '''
          }
       }
       stage('Saving Results') {
