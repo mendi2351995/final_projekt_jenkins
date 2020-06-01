@@ -1,8 +1,19 @@
-#include <stdio.h>
+#include <iostream>
+#include <vector>
+#include <string>
 
-int main(int argc, char **argv)
+using namespace std;
+
+typedef vector<string> CommandLineStringArgs;
+
+int main(int argc, char *argv[])
 {
-	printf("hello: "+ argc + argv);
-	
-	return 0;
+    CommandLineStringArgs cmdlineStringArgs(&argv[0], &argv[0 + argc]);
+
+    for (int i = 0; i < cmdlineStringArgs.size(); ++i)
+    {
+        cout << cmdlineStringArgs[i] << endl;
+    }
+
+    return 0;
 }
