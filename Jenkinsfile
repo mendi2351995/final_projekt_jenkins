@@ -28,14 +28,15 @@ pipeline {
 		sh '''
 		    if [[ $PARAM == "ALL" ]]; then
 			echo 'Execute ALL script'
+			
 		    elif [[ $PARAM == "PYTHON" ]]; then
 		      echo 'Execute python script'
 		      chmod 755 ${WORKSPACE}/python.py
-		      ./python.py $PARAM
 		      echo "Testing input string $PARAM" 
             	      cd ${WORKSPACE}
                       python python.py $PARAM
                       python python.py $PARAM >> results
+		      
 		    elif [[ $PARAM == "C" ]]; then
 		    	echo 'Execute C script'
 			chmod 755 ${WORKSPACE}/Cfile.c
