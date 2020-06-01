@@ -31,7 +31,7 @@ pipeline {
 		    elif [[ $PARAM == "PYTHON" ]]; then
 		      echo 'Execute python script'
 		      chmod 755 ${WORKSPACE}/python.py
-		      ${WORKSPACE}/python.py $PARAM
+		      ./python.py $PARAM
 		    elif [[ $PARAM == "C" ]]; then
 		    	echo 'Execute C script'
 			chmod 755 ${WORKSPACE}/Cfile.c
