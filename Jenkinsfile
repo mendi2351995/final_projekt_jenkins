@@ -89,7 +89,7 @@ pipeline {
 	   stage ('javaFile') 
 	   {
       		when {
-                expression { PARAM == 'java'}
+                expression { PARAM == 'JAVA'}
             	}
             	steps {
                 	sh '''
