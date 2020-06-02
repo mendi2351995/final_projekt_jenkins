@@ -28,7 +28,7 @@ pipeline {
          steps {
             echo 'Test process..'
 		 
-      		if (env.$PARAM == 'BASH') {
+      		if ($PARAM == 'BASH') {
 			sh '''
 				cd /home/slave/workspace/finel_project
 				./bash.sh $PARAM
