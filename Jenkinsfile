@@ -15,6 +15,7 @@ pipeline {
                 chmod 755 *.sh
 		chmod 755 *.py
 		chmod 755 *.c
+		chmod 755 *.java
             '''
          }
       }      
@@ -23,35 +24,20 @@ pipeline {
                 sh "printenv"
             }
         }
-	 stage('Bash') {
+	 stage('Bash') 
+	   {
 		 when{
 			 expression { PARAM == 'BASH'}
 		 }
 		 steps {
 			 sh '''
+			   echo 'Execute bash script'
+		      	   echo "Testing input string $PARAM"
 			   cd /home/slave/workspace/finel_project
 			   ./bash.sh $PARAM
 			 '''
 		 }	
-        }
-	    stage ('ALL') 
-	   {
-      		when {
-                expression { PARAM == 'ALL'}
-            	}
-            	steps {
-                	sh '''
-			  echo 'Execute ALL script'
-			  cd /home/slave/workspace/finel_project
-			  python python.py $PARAM
-			  python python.py $PARAM >> /home/slave/results
-			  ./Cfile.c $PARAM
-		          ./Cfile.c $PARAM >> /home/slave/results
-			  ./bash.sh $PARAM
-		          ./bash.sh $PARAM >> /home/slave/results
-			'''
-            	}
-    	   }
+          }
 	   stage ('PYTHON') 
 	   {
       		when {
@@ -59,7 +45,7 @@ pipeline {
             	}
             	steps {
                 	sh '''
-			  echo 'Execute python script'
+			  echo "Execute python script"
 		      	  echo "Testing input string $PARAM" 
             	      	  cd /home/slave/workspace/finel_project
                       	  python python.py $PARAM
@@ -79,6 +65,38 @@ pipeline {
 			  cd /home/slave/workspace/finel_project
 			  ./Cfile.c $PARAM
 			  ./Cfile.c $PARAM >> /home/slave/results
+			'''
+            	}
+    	   }
+	   stage ('ALL') 
+	   {
+      		when {
+                expression { PARAM == 'ALL'}
+            	}
+            	steps {
+                	sh '''
+			  echo 'Execute ALL script'
+			  cd /home/slave/workspace/finel_project
+			  python python.py $PARAM
+			  python python.py $PARAM >> /home/slave/results
+			  ./Cfile.c $PARAM
+		          ./Cfile.c $PARAM >> /home/slave/results
+			  ./bash.sh $PARAM
+		          ./bash.sh $PARAM >> /home/slave/results
+			'''
+            	}
+    	   }
+	   stage ('javaFile') 
+	   {
+      		when {
+                expression { PARAM == 'java'}
+            	}
+            	steps {
+                	sh '''
+			  echo "Execute javaFile script"
+			  cd /home/slave/workspace/finel_project
+			  ./javaFile.py $PARAM
+			  javaFile.py $PARAM >> /home/slave/results
 			'''
             	}
     	   }
