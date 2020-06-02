@@ -12,6 +12,7 @@ pipeline {
             echo 'Build process..'            
             sh '''
                 cd ${WORKSPACE}/
+		pwd
                 chmod 755 *.sh
 		chmod 755 *.py
 		chmod 755 *.c
@@ -54,7 +55,7 @@ pipeline {
 		    elif [[ $PARAM == "BASH" ]]; then 
 	            	echo 'Execute BASH script'
 			echo "Testing input string $PARAM" 
-              		cd ${WORKSPACE}/
+              		cd /home/slave/workspace/finel_project
              		./bash.sh $PARAM
               		./bash.sh $PARAM >> /home/slave/results
 		    else
