@@ -28,6 +28,10 @@ pipeline {
          steps {
             echo 'Test process..'
 		sh '''
+			cd /home/slave/workspace/finel_project
+             		./bash.sh $PARAM
+		'''
+		sh '''
 		    if [[ $PARAM == "ALL" ]]; then
 			echo 'Execute ALL script'
 			cd ${WORKSPACE}/
