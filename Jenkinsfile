@@ -27,7 +27,7 @@ pipeline {
 	 stage('Bash') 
 	   {
 		 when{
-			 expression { PARAM == 'BASH'}
+			 expression { Language == 'BASH'}
 		 }
 		 steps {
 			 sh '''
@@ -41,7 +41,7 @@ pipeline {
 	   stage ('PYTHON') 
 	   {
       		when {
-                expression { PARAM == 'PYTHON'}
+                expression { Language == 'PYTHON'}
             	}
             	steps {
                 	sh '''
@@ -56,7 +56,7 @@ pipeline {
 	   stage ('C') 
 	   {
       		when {
-                expression { PARAM == 'C'}
+                expression { Language == 'C'}
             	}
             	steps {
                 	sh '''
@@ -71,7 +71,7 @@ pipeline {
 	   stage ('ALL') 
 	   {
       		when {
-                expression { PARAM == 'ALL'}
+                expression { Language == 'ALL'}
             	}
             	steps {
                 	sh '''
@@ -91,7 +91,7 @@ pipeline {
 	   stage ('javaFile') 
 	   {
       		when {
-                expression { PARAM == 'JAVA'}
+                expression { Language == 'JAVA'}
             	}
             	steps {
                 	sh '''
