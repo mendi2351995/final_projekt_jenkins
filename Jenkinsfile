@@ -26,7 +26,7 @@ pipeline {
         }
 	 stage('Example') {
 		 when{
-			 expression { $PARAM == 'BASH'}
+			 expression { PARAM == 'BASH'}
 		 }
 		 steps {
 			 sh '''
