@@ -14,6 +14,7 @@ pipeline {
                 cd ${WORKSPACE}/
                 chmod 755 *.sh
 		chmod 755 *.py
+		chmod 755 *.c
             '''
          }
       }      
@@ -28,23 +29,34 @@ pipeline {
 		sh '''
 		    if [[ $PARAM == "ALL" ]]; then
 			echo 'Execute ALL script'
+			cd ${WORKSPACE}/
+			python python.py $PARAM
+                      	python python.py $PARAM >> /home/slave/results
+			${WORKSPACE}/Cfile.c $PARAM
+			./Cfile.c $PARAM >> /home/slave/results
+			./bash.sh $PARAM
+              		./bash.sh $PARAM >> /home/slave/results
 			
 		    elif [[ $PARAM == "PYTHON" ]]; then
-		      echo 'Execute python script'
-		      chmod 755 ${WORKSPACE}/python.py
-		      echo "Testing input string $PARAM" 
-            	      cd ${WORKSPACE}
-                      python python.py $PARAM
-                      python python.py $PARAM >> /home/slave/results
+		      	echo 'Execute python script'
+		      	echo "Testing input string $PARAM" 
+            	      	cd ${WORKSPACE}/
+                      	python python.py $PARAM
+                      	python python.py $PARAM >> /home/slave/results
 		      
 		    elif [[ $PARAM == "C" ]]; then
 		    	echo 'Execute C script'
-			chmod 755 ${WORKSPACE}/Cfile.c
+			echo "Testing input string $PARAM"
+			cd ${WORKSPACE}/
 			${WORKSPACE}/Cfile.c $PARAM
+			./Cfile.c $PARAM >> /home/slave/results
+			
 		    elif [[ $PARAM == "BASH" ]]; then 
 	            	echo 'Execute BASH script'
-			chmod 755 ${WORKSPACE}/bash.sh
-			${WORKSPACE}/bash.sh $PARAM
+			echo "Testing input string $PARAM" 
+              		cd ${WORKSPACE}/
+             		./bash.sh $PARAM
+              		./bash.sh $PARAM >> /home/slave/results
 		    else
 		    	echo "$PARAM file not exsit"
 		   fi
