@@ -27,10 +27,17 @@ pipeline {
       stage('Test') {
          steps {
             echo 'Test process..'
-		sh '''
-			cd /home/slave/workspace/finel_project
-             		./bash.sh $PARAM
-		'''
+		 
+      		if (env.$PARAM == 'BASH') {
+			sh '''
+				cd /home/slave/workspace/finel_project
+				./bash.sh $PARAM
+			'''
+        	} else {
+            		echo 'Is not bashing'
+        	}
+    
+		
 		sh '''
 		    if [[ $PARAM == "ALL" ]]; then
 			echo 'Execute ALL script'
