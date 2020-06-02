@@ -7,12 +7,11 @@ pipeline {
           checkout scm
         } 
       }
-      stage('Build') {
+	stage('Build') {
          steps {
             echo 'Build process..'            
             sh '''
-                cd ${WORKSPACE}/
-		pwd
+                cd /home/slave/workspace/finel_project
                 chmod 755 *.sh
 		chmod 755 *.py
 		chmod 755 *.c
@@ -24,7 +23,7 @@ pipeline {
                 sh "printenv"
             }
         }
-	 stage('Example') {
+	 stage('Bash') {
 		 when{
 			 expression { PARAM == 'BASH'}
 		 }
@@ -34,47 +33,55 @@ pipeline {
 			   ./bash.sh $PARAM
 			 '''
 		 }	
-    }	   
-      stage('Test') {
-         steps {
-            echo 'Test process..'
-		sh '''
-		    if [[ $PARAM == "ALL" ]]; then
-			echo 'Execute ALL script'
-			cd ${WORKSPACE}/
-			python python.py $PARAM
-                      	python python.py $PARAM >> /home/slave/results
-			${WORKSPACE}/Cfile.c $PARAM
-			./Cfile.c $PARAM >> /home/slave/results
-			./bash.sh $PARAM
-              		./bash.sh $PARAM >> /home/slave/results
-			
-		    elif [[ $PARAM == "PYTHON" ]]; then
-		      	echo 'Execute python script'
-		      	echo "Testing input string $PARAM" 
-            	      	cd ${WORKSPACE}/
-                      	python python.py $PARAM
-                      	python python.py $PARAM >> /home/slave/results
-		      
-		    elif [[ $PARAM == "C" ]]; then
-		    	echo 'Execute C script'
-			echo "Testing input string $PARAM"
-			cd ${WORKSPACE}/
-			${WORKSPACE}/Cfile.c $PARAM
-			./Cfile.c $PARAM >> /home/slave/results
-			
-		    elif [[ $PARAM == "BASH" ]]; then 
-	            	echo 'Execute BASH script'
-			echo "Testing input string $PARAM" 
-              		cd /home/slave/workspace/finel_project
-             		./bash.sh $PARAM
-              		./bash.sh $PARAM >> /home/slave/results
-		    else
-		    	echo "$PARAM file not exsit"
-		   fi
-		'''  
-         }
-      }
+        }
+	    stage ('ALL') 
+	   {
+      		when {
+                expression { PARAM == 'ALL'}
+            	}
+            	steps {
+                	sh '''
+			  echo 'Execute ALL script'
+			  cd /home/slave/workspace/finel_project
+			  python python.py $PARAM
+			  python python.py $PARAM >> /home/slave/results
+			  ./Cfile.c $PARAM
+		          ./Cfile.c $PARAM >> /home/slave/results
+			  ./bash.sh $PARAM
+		          ./bash.sh $PARAM >> /home/slave/results
+			'''
+            	}
+    	   }
+	   stage ('PYTHON') 
+	   {
+      		when {
+                expression { PARAM == 'PYTHON'}
+            	}
+            	steps {
+                	sh '''
+			  echo 'Execute python script'
+		      	  echo "Testing input string $PARAM" 
+            	      	  cd /home/slave/workspace/finel_project
+                      	  python python.py $PARAM
+                      	  python python.py $PARAM >> /home/slave/results
+			'''
+            	}
+    	   }
+	   stage ('C') 
+	   {
+      		when {
+                expression { PARAM == 'C'}
+            	}
+            	steps {
+                	sh '''
+			  echo 'Execute C script'
+			  echo "Testing input string $PARAM"
+			  cd /home/slave/workspace/finel_project
+			  ./Cfile.c $PARAM
+			  ./Cfile.c $PARAM >> /home/slave/results
+			'''
+            	}
+    	   }
 	stage('Saving Results') {
          steps {
             echo 'Saving Results process..'
