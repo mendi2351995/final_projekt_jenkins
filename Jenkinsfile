@@ -23,21 +23,20 @@ pipeline {
             steps {
                 sh "printenv"
             }
-        }    
-      stage('Test') {
-         steps {
-            echo 'Test process..'
-		 
-      		if ($PARAM == 'BASH') {
+        }
+	 stage('Example') {
+        if ($PARAM == 'BASH') {
 			sh '''
-				cd /home/slave/workspace/finel_project
-				./bash.sh $PARAM
+			   cd /home/slave/workspace/finel_project
+			   ./bash.sh $PARAM
 			'''
         	} else {
             		echo 'Is not bashing'
         	}
-    
-		
+    }	   
+      stage('Test') {
+         steps {
+            echo 'Test process..'
 		sh '''
 		    if [[ $PARAM == "ALL" ]]; then
 			echo 'Execute ALL script'
