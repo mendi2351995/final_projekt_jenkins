@@ -25,14 +25,15 @@ pipeline {
             }
         }
 	 stage('Example') {
-        if ($PARAM == 'BASH') {
-			sh '''
+		 when{
+			 expression { $PARAM == 'BASH'}
+		 }
+		 steps {
+			 sh '''
 			   cd /home/slave/workspace/finel_project
 			   ./bash.sh $PARAM
-			'''
-        	} else {
-            		echo 'Is not bashing'
-        	}
+			 '''
+		 }	
     }	   
       stage('Test') {
          steps {
