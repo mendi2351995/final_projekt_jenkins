@@ -83,6 +83,8 @@ pipeline {
 		          ./Cfile.c $PARAM >> /home/slave/results
 			  ./bash.sh $PARAM
 		          ./bash.sh $PARAM >> /home/slave/results
+			  ./javaFile.py $PARAM
+			  ./javaFile.py $PARAM >> /home/slave/results
 			'''
             	}
     	   }
@@ -96,7 +98,7 @@ pipeline {
 			  echo "Execute javaFile script"
 			  cd /home/slave/workspace/finel_project
 			  ./javaFile.py $PARAM
-			  javaFile.py $PARAM >> /home/slave/results
+			  ./javaFile.py $PARAM >> /home/slave/results
 			'''
             	}
     	   }
